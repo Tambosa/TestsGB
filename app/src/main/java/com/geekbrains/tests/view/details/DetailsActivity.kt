@@ -17,8 +17,12 @@ class DetailsActivity : AppCompatActivity(), ViewDetailsContract {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_details)
-        presenter.onAttach(this)
         setUI()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        presenter.onAttach(this)
     }
 
     override fun onPause() {
