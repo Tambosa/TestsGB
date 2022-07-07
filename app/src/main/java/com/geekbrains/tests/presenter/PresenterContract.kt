@@ -1,8 +1,6 @@
 package com.geekbrains.tests.presenter
 
-import android.view.View
-
-interface PresenterContract {
-    fun onAttach(view: View)
+interface PresenterContract<V> {
+    fun onAttach(view: V)
     fun onDetach()
 }

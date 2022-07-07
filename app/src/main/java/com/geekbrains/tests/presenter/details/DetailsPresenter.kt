@@ -1,17 +1,14 @@
 package com.geekbrains.tests.presenter.details
 
-import android.view.View
-import com.geekbrains.tests.presenter.PresenterContract
 import com.geekbrains.tests.view.details.ViewDetailsContract
 
 internal class DetailsPresenter internal constructor(
-    private val viewContract: ViewDetailsContract,
     private var count: Int = 0
-) : PresenterDetailsContract, PresenterContract {
+) : PresenterDetailsContract<ViewDetailsContract> {
 
-    private var view: View? = null
+    private var view: ViewDetailsContract? = null
 
-    override fun onAttach(view: View) {
+    override fun onAttach(view: ViewDetailsContract) {
         this.view = view
     }
 
@@ -25,11 +22,11 @@ internal class DetailsPresenter internal constructor(
 
     override fun onIncrement() {
         count++
-        viewContract.setCount(count)
+        view?.setCount(count)
     }
 
     override fun onDecrement() {
         count--
-        viewContract.setCount(count)
+        view?.setCount(count)
     }
 }
