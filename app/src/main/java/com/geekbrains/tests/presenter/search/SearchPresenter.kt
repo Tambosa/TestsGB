@@ -15,36 +15,45 @@ import retrofit2.Response
  */
 
 internal class SearchPresenter internal constructor(
-    private val viewContract: ViewSearchContract,
     private val repository: GitHubRepository
-) : PresenterSearchContract, GitHubRepositoryCallback {
+) : PresenterSearchContract<ViewSearchContract>, GitHubRepositoryCallback {
+
+    private var view: ViewSearchContract? = null
+
+    override fun onAttach(view: ViewSearchContract) {
+        this.view = view
+    }
+
+    override fun onDetach() {
+        view = null
+    }
 
     override fun searchGitHub(searchQuery: String) {
-        viewContract.displayLoading(true)
+        view?.displayLoading(true)
         repository.searchGithub(searchQuery, this)
     }
 
     override fun handleGitHubResponse(response: Response<SearchResponse?>?) {
-        viewContract.displayLoading(false)
+        view?.displayLoading(false)
         if (response != null && response.isSuccessful) {
             val searchResponse = response.body()
             val searchResults = searchResponse?.searchResults
             val totalCount = searchResponse?.totalCount
             if (searchResults != null && totalCount != null) {
-                viewContract.displaySearchResults(
+                view?.displaySearchResults(
                     searchResults,
                     totalCount
                 )
             } else {
-                viewContract.displayError("Search results or total count are null")
+                view?.displayError("Search results or total count are null")
             }
         } else {
-            viewContract.displayError("Response is null or unsuccessful")
+            view?.displayError("Response is null or unsuccessful")
         }
     }
 
     override fun handleGitHubError() {
-        viewContract.displayLoading(false)
-        viewContract.displayError()
+        view?.displayLoading(false)
+        view?.displayError()
     }
 }
