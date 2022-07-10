@@ -17,7 +17,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
-class MainActivityEspressoTest {
+class FakeMainActivityEspressoTest {
 
     private lateinit var scenario: ActivityScenario<MainActivity>
 
@@ -32,8 +32,7 @@ class MainActivityEspressoTest {
         onView(withId(R.id.searchEditText)).perform(replaceText("algol"), closeSoftKeyboard())
         onView(withId(R.id.searchEditText)).perform(pressImeActionButton())
 
-        onView(isRoot()).perform(delay())
-        onView(withId(R.id.totalCountTextView)).check(matches(withText("Number of results: 3134")))
+        onView(withId(R.id.totalCountTextView)).check(matches(withText("Number of results: 42")))
     }
 
     private fun delay(): ViewAction {
