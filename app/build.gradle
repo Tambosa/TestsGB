@@ -34,6 +34,26 @@ android {
         unitTests {
             includeAndroidResources = true
         }
+        animationsDisabled = true
+    }
+
+    flavorDimensions "default"
+    productFlavors {
+        real {
+            applicationIdSuffix ".real"
+            versionNameSuffix "-real"
+            buildConfigField "String", "TYPE", '"REAL"'
+        }
+        fake {
+            applicationIdSuffix ".fake"
+            versionNameSuffix "-fake"
+            buildConfigField "String", "TYPE", '"FAKE"'
+        }
+    }
+    androidComponents {
+        beforeVariants(selector().withBuildType("release")) { variantBuilder ->
+            variantBuilder.enabled = false
+        }
     }
     namespace 'com.geekbrains.tests'
 }
