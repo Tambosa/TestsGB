@@ -24,7 +24,8 @@ import java.util.*
 class MainActivity : AppCompatActivity(), ViewSearchContract {
 
     private val adapter = SearchResultAdapter()
-    private val presenter: PresenterSearchContract<ViewSearchContract> = SearchPresenter(createRepository())
+    private val presenter: PresenterSearchContract<ViewSearchContract> =
+        SearchPresenter(createRepository())
     private var totalCount: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,8 +48,15 @@ class MainActivity : AppCompatActivity(), ViewSearchContract {
         toDetailsActivityButton.setOnClickListener {
             startActivity(DetailsActivity.getIntent(this, totalCount))
         }
+        setOnSearchButtonListener()
         setQueryListener()
         setRecyclerView()
+    }
+
+    private fun setOnSearchButtonListener() {
+        searchButton.setOnClickListener {
+            presenter.searchGitHub(searchButton.text.toString())
+        }
     }
 
     private fun setRecyclerView() {
