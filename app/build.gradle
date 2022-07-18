@@ -56,6 +56,12 @@ android {
         }
     }
     namespace 'com.geekbrains.tests'
+
+    sourceSets {
+        androidTest {
+            java.srcDirs += "src/shared/kotlin"
+        }
+    }
 }
 
 dependencies {
