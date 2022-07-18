@@ -1,5 +1,6 @@
 package com.geekbrains.tests
 
+import TEST_NUMBER
 import android.view.View
 import androidx.test.core.app.ActivityScenario
 import androidx.test.espresso.Espresso.onView
@@ -32,7 +33,7 @@ class FakeMainActivityEspressoTest {
         onView(withId(R.id.searchEditText)).perform(replaceText("algol"), closeSoftKeyboard())
         onView(withId(R.id.searchEditText)).perform(pressImeActionButton())
 
-        onView(withId(R.id.totalCountTextView)).check(matches(withText("Number of results: 42")))
+        onView(withId(R.id.totalCountTextView)).check(matches(withText("Number of results: $TEST_NUMBER")))
     }
 
     private fun delay(): ViewAction {
