@@ -1,5 +1,6 @@
 package com.geekbrains.tests.espresso
 
+import TEST_NUMBER_OF_RESULTS_MINUS_1
 import TEST_NUMBER_OF_RESULTS_PLUS_1
 import androidx.core.os.bundleOf
 import androidx.fragment.app.testing.FragmentScenario
@@ -54,5 +55,30 @@ class DetailsFragmentEspressoTest {
     fun fragment_testIncrementButton() {
         onView(withId(R.id.incrementButton)).perform(click())
         onView(withId(R.id.totalCountTextView)).check(matches(withText(TEST_NUMBER_OF_RESULTS_PLUS_1)))
+    }
+
+    @Test
+    fun fragment_testDecrementButton() {
+        onView(withId(R.id.decrementButton)).perform(click())
+        onView(withId(R.id.totalCountTextView))
+            .check(matches(withText(TEST_NUMBER_OF_RESULTS_MINUS_1)))
+    }
+
+    @Test
+    fun fragment_testBundleWithButtons() {
+        val scenario = launchFragmentInContainer<DetailsFragment>(
+            bundleOf("TOTAL_COUNT_EXTRA" to 42)
+        )
+        onView(withId(R.id.incrementButton)).perform(click())
+        onView(withId(R.id.totalCountTextView)).check(matches(withText("Number of results: 43")))
+    }
+
+    @Test
+    fun fragment_testRecreate() {
+        val scenario = launchFragmentInContainer<DetailsFragment>(
+            bundleOf("TOTAL_COUNT_EXTRA" to 42)
+        )
+        scenario.recreate()
+        onView(withId(R.id.totalCountTextView)).check(matches(withText("Number of results: 42")))
     }
 }
