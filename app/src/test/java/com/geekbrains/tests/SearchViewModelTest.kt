@@ -78,6 +78,25 @@ class SearchViewModelTest {
     }
 
     @Test
+    fun livedata_returnNullIsError() {
+        testCoroutineRule.runBlockingTest {
+            val observer = Observer<ScreenState> {}
+            val liveData = searchViewModel.subscribeToLiveData()
+
+            `when`(repository.searchGithubAsync(SEARCH_QUERY)).thenReturn(null)
+
+            try {
+                liveData.observeForever(observer)
+                searchViewModel.searchGitHub(SEARCH_QUERY)
+                val value: ScreenState.Error = liveData.value as ScreenState.Error
+                Assert.assertEquals(value.error.message, EXCEPTION_TEXT)
+            } finally {
+                liveData.removeObserver(observer)
+            }
+        }
+    }
+
+    @Test
     fun coroutines_TestException() {
         testCoroutineRule.runBlockingTest {
             val observer = Observer<ScreenState> {}
