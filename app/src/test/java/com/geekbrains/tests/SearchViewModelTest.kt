@@ -7,7 +7,6 @@ import com.geekbrains.tests.repository.GitHubRepository
 import com.geekbrains.tests.view.search.ScreenState
 import com.geekbrains.tests.view.search.SearchViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.runTest
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Rule
@@ -32,7 +31,7 @@ class SearchViewModelTest {
 
     @Before
     fun setUp() {
-        MockitoAnnotations.initMocks(this)
+        MockitoAnnotations.openMocks(this)
         searchViewModel = SearchViewModel(repository)
     }
 
